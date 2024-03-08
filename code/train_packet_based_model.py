@@ -83,8 +83,7 @@ def train_model(x_train,x_train_normalized,timesteps,num_input):
         print('x_train_partial',x_train_partial.dtype)
         optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
         grads = []
-        for v in model.trainable_variables:
-            grads.append(np.zeros(v.shape))
+        grads = [tf.zeros_like(v, dtype=tf.float32) for v in model.trainable_variables]
         optimizer.apply_gradients(zip(grads,model.trainable_variables))
 
         train_loss.reset_states()
